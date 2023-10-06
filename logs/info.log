@@ -1,0 +1,11 @@
+2023-10-06 23:38:47 [main] INFO   - Player (id = 1): Out-of-range attack value (1-30). Max value is set.
+2023-10-06 23:38:47 [main] INFO   - Player (id = 1): Out-of-range defense value (1-30). Max value is set.
+2023-10-06 23:38:47 [main] INFO   - Player (id = 1): The min damage cannot be negative. Set value 0.
+2023-10-06 23:38:47 [main] INFO   - Player (id = 1): Creating is complete. attack: 100 defense: 0 health: 56 status: alive
+2023-10-06 23:38:47 [main] INFO   - Player (id = 2): Out-of-range attack value (1-30). Max value is set.
+2023-10-06 23:38:47 [main] WARN   - Player (id = 2): The health value cannot be negative. The default value (60) is set.
+2023-10-06 23:38:47 [main] INFO   - Player (id = 2): The maximum damage value was set incorrectly. New value: 126
+2023-10-06 23:38:47 [main] INFO   - Player (id = 2): Creating is complete. attack: -3 defense: 1 health: -516 status: alive
+2023-10-06 23:38:47 [main] INFO   - Monster (id = 3): Out-of-range defense value (1-30). Max value is set.
+2023-10-06 23:38:47 [main] INFO   - Monster (id = 3): The maximum damage value was set incorrectly. New value: 12
+2023-10-06 23:38:47 [main] INFO   - Monster (id = 3): Creating is complete. attack: 13 defense: 31 health: 0 status: dead
