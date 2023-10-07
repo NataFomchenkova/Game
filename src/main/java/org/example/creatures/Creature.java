@@ -35,18 +35,18 @@ public abstract class Creature {
         if(health >= 0){
             this.health = health;
         }else{
-            logger.warn(getSimpleInfo() + "The health value cannot be negative. The default value (" + DEFAULT_HEALTH + ") is set.");
+            logger.warn(getSimpleInfo() + " The health value cannot be negative. The default value (" + DEFAULT_HEALTH + ") is set.");
             this.health = DEFAULT_HEALTH;
         }
         this.healthMax = this.health;
         // Checking the damage value
         if(damageMin < 0){
-            logger.info(getSimpleInfo() + "The min damage cannot be negative. Set value 0.");
+            logger.warn(getSimpleInfo() + " The min damage cannot be negative. Set value 0.");
             damageMin = 0;
         }
         if ((damageMin > damageMax) || (damageMax == 0)) {
             damageMax = damageMin + DEFAULT_DIFFERENCE_MIN_MAX_DAMAGE;
-            logger.info(getSimpleInfo() + "The maximum damage value was set incorrectly. New value: " + damageMax);
+            logger.warn(getSimpleInfo() + " The maximum damage value was set incorrectly. New value: " + damageMax);
         }
         this.damageMin = damageMin;
         this.damageMax = damageMax;
@@ -54,25 +54,47 @@ public abstract class Creature {
         if (this.health > 0){
             isAlive = true;
         }
-        logger.info(getSimpleInfo() + " Creation competed. attack: " + attack + " defense: " + defense +
-                " health: " + health + " status: " + getStatus());
+        logger.info(getSimpleInfo() + " Creation competed." + " Attack: " + attack + "; defense: " + defense +
+                "; health: " + health +  "; damage: " + damageMin + "-" + damageMax + "; status: " + getStatus());
     }
 
     private int validateValue(int value, int min, int max, String parameter) {
          if ( value < min || value > max){
-             logger.info(getSimpleInfo() + "Out-of-range " + parameter + " value (" + min + "-" + max + "). Max value is set.");
+             logger.warn(getSimpleInfo() + " Out-of-range " + parameter + " value (" + min + "-" + max + "). Max value is set.");
          return max;
     }
         return value;
     }
 
+    public int getAttack() {
+        return attack;
+    }
+    public int getDefense() {
+        return defense;
+    }
+    public int getDamageMin() {
+        return damageMin;
+    }
+    public int getDamageMax() {
+        return damageMax;
+    }
+    public int getHealth() {
+        return health;
+    }
+    public int getHealthMax() {
+        return healthMax;
+    }
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public void attack(Creature target) {
-        //If target is dead
+        String info = "Attack. " + getSimpleInfo() + " attacks " + target.getSimpleInfo() + ". ";
+        //If the target is dead
         if (!target.isAlive){
-            System.out.println("The target (id = " + target.id + ") is dead.");
+            logger.info(info + "The target is dead. No attack is possible.");
             return;
         }
-
         //If target is alive
         int attackModifier = attack - target.defense + 1;
         int N = Math.max(attackModifier, 1);
@@ -80,37 +102,40 @@ public abstract class Creature {
             int diceValue = (int) (Math.random() * 6) + 1;
             if (diceValue >= 5) {
                 int damage = (int) (Math.random() * (damageMax - damageMin + 1) + damageMin);
+                logger.info(info + "Damage: " + damage);
                 target.setHealth(target.getHealth() - damage);
-                // Сообщение об уроне
-                break;
+                return;
             }
         }
-    }
-
-    public int getHealthMax() {
-        return healthMax;
-    }
-
-    public int getHealth() {
-        return health;
+        logger.info(info + "The attacker couldn't hit.");
     }
 
     public void setHealth(int health) {
+        //It is not possible to set health higher than maximum health
+        health = Math.min(health, healthMax);
         if (health <= 0) {
             this.health = 0;
             isAlive = false;
-            System.out.println(getSimpleInfo() + " is dead.");
+            logger.info("SetHealth. " + getSimpleInfo() + " is dead.");
         } else {
             this.health = health;
+            isAlive = true;
+            logger.info("SetHealth. " + getSimpleInfo() +  " health: " + health + "/" + healthMax);
         }
     }
- /*   public int getCount(){
-        return countCreature;
-    }*/
+
+
     public String getSimpleInfo(){
-        return getClass().getSimpleName() + " (id = " + this.id + "): ";
+        return getClass().getSimpleName() + " (id = " + this.id + ")";
     }
     public String getStatus(){
         return (isAlive)? "alive": "dead";
+    }
+
+    @Override
+    public String toString() {
+        String info = getSimpleInfo()  + "\n " + "attack: " + attack + "; defense: " + defense + "; health: " + health +
+                "; damage: " + damageMin + "-" + damageMax +"; status: " + getStatus();
+        return info;
     }
 }

@@ -6,15 +6,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-/*        Scanner scanner = new Scanner(System.in);
-        //String title = scanner.nextLine();
-        int pages = scanner.nextInt();*/
+        Player player1 = new Player(100, 0, 56, -4, 16);
+        Player player2 = new Player(-3, 1, -516, 120, 16);
+        Monster monster1 = new Monster(13, 15, 200, 6, 0);
+        Monster monster2 = new Monster(13, 15, 2, 6, 0);
 
-        Creature creature1 = new Player( 100, 0, 56, -4, 16);
-        Player creature2 = new Player(-3, 1, -516, 120, 16);
-        Creature creature3 = new Monster(13, 31, 0, 6, 0);
-        System.out.println(creature2);
-        System.out.println(creature3);
+        player1.attack(monster1);
+        player2.attack(monster1);
+        monster1.attack(player1);
+        monster2.attack(player1);
+        player1.attack(monster2);
+        player2.attack(monster2);
+        player1.heal();
 
     }
 }

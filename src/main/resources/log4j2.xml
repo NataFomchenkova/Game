@@ -1,50 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN">
     <appenders>
-        <File name="InfoFile" fileName="logs/info.log">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        <File name="InfoFile" fileName="logs/info.log" append="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"/>
             <Filters>
                 <ThresholdFilter level="info" onMatch="NEUTRAL" onMismatch="NEUTRAL" />
             </Filters>
         </File>
-        <!--<File name="ErrorsFile" fileName="logs/errors.log">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-            <Filters>
-                <ThresholdFilter level="fatal" onMatch="DENY" onMismatch="NEUTRAL" />
-            </Filters>
-        </File>
-        <File name="WarnFile" fileName="logs/warn.log">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-            <Filters>
-                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
-            </Filters>
-        </File>
-        <File name="ExceptionsFile" fileName="logs/exceptions.log">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-            <Filters>
-                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
-            </Filters>
-        </File>-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
+        </Console>
     </appenders>
 
     <loggers>
-        <!--        <Logger name= "ErrorsFile" level="error" additivity="false">
-                    <AppenderRef ref="ErrorsFile"/>
-                </Logger>-->
         <root level="debug">
+            <appender-ref ref="Console"  level="info"/>
             <appender-ref ref="InfoFile" level="info"/>
-            <appender-ref ref="ErrorsFile" level="error"/>
-            <!--<appender-ref ref="ExceptionsFile" level="warn"/>-->
-            <appender-ref ref="WarnFile" level="warn"/>
         </root>
-        <!--<logger name="errorLogger" level="error">
-            <AppenderRef ref="ErrorsFile" level="error"/>
-        </logger>
-        <logger name="exceptionsLogger" level="warn">
-            <AppenderRef ref="ExceptionsFile" level="warn"/>
-        </logger>
-        <logger name="infoLogger" level="info">
-            <AppenderRef ref="SearchFile" level="info"/>
-        </logger>-->
     </loggers>
 </configuration>
